@@ -186,14 +186,6 @@ Los parámetros ingresados son validados antes de iniciar cualquier grabación p
 
 ---
 
-## Futuras mejoras 🌟
-
-1. Implementar detección de múltiples objetos en un solo script.
-2. Agregar opciones de configuración avanzadas directamente desde la interfaz web.
-3. Integrar almacenamiento en la nube para los resultados procesados.
-
----
-
 ## Contribuciones 🤝
 
 ¡Siéntete libre de contribuir a este proyecto! Puedes:
