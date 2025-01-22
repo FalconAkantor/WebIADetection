@@ -3,6 +3,8 @@
 **Detect-IA** es un sistema avanzado de detección de objetos basado en YOLOv5 que permite la grabación, procesamiento y notificación automática de eventos detectados en tiempo real a través de Telegram. Este proyecto está diseñado para detectar personas, gatos y perros desde flujos de cámaras y ofrece una interfaz web para su gestión.
 
 ---
+## Demo 🎥
+![Demostración](./demo.gif)
 
 ## 🚀 Características principales
 
