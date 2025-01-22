@@ -31,6 +31,62 @@ Detect-IA/
 
 ## Configuración
 
+### Configuración de los Archivos `config.py` y `config.sh` 📂
+
+### Archivo `config.py`
+Este archivo define las rutas base del proyecto, así como las rutas para los scripts y los archivos de logs. Es útil para centralizar la configuración de las rutas y facilitar modificaciones en el futuro.
+
+### Código:
+
+```python
+import os
+
+BASE_DIR = "ruta absoluta del proyecto"  # Cambia esto a la ruta absoluta, por ejemplo: "/root/DetectIAPerson"
+
+# Configuración de scripts y logs
+LOG_FILES = {
+    'analisis': os.path.join(BASE_DIR, "detection.log"),
+    'perro': os.path.join(BASE_DIR, "perros.log"),
+    'gato': os.path.join(BASE_DIR, "gatos.log"),
+}
+
+SCRIPTS = {
+    'analisis': os.path.join(BASE_DIR, "analisis.sh"),
+    'perro': os.path.join(BASE_DIR, "perro.sh"),
+    'gato': os.path.join(BASE_DIR, "gato.sh"),
+}
+```
+### Configuración:
+- **BASE_DIR**: Cambia `"ruta absoluta del proyecto"` a la ubicación completa de tu proyecto. Usa el comando `pwd` en la terminal dentro del directorio del proyecto para obtener esta ruta.
+  - **Ejemplo**: 
+    ```python
+    BASE_DIR = "/root/DetectIAPerson"
+    ```
+---
+
+### Archivo `config.sh`
+
+Este archivo contiene configuraciones necesarias para interactuar con Telegram, especificar la fuente del video, y definir el directorio de salida.
+
+### Código:
+```bash
+# Configuración de Telegram
+TOKEN="TuTokendelBotDeTelegram"
+CHAT_ID="TuChatID"
+URL="https://api.telegram.org/bot$TOKEN/sendVideo"
+MESSAGE_URL="https://api.telegram.org/bot$TOKEN/sendMessage"
+PHOTO_URL="https://api.telegram.org/bot$TOKEN/sendPhoto"
+DOCUMENT_URL="https://api.telegram.org/bot$TOKEN/sendDocument"
+
+# Ruta de salida absoluta donde se aloja el proyecto
+OUTPUT_DIR="RUTAABSOLUTA"
+
+# URL del video de origen
+VIDEO_URL="URLDELA_CAMARA_DE_VIDEO"
+```
+
+
+
 ### Requisitos previos
 
 - **Python 3.8+**
