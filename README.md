@@ -26,9 +26,11 @@ Detect-IA/
 ├── app.py            # Aplicación Flask
 ├── config.py         # Configuración de rutas para scripts y logs
 ├── config.sh         # Configuración de variables (Telegram, rutas, cámara)
-├── templates/
+ templates/
 │   └── index.html    # Interfaz web
-└── requirements.txt  # Dependencias necesarias
+├── requirements.txt  # Dependencias necesarias
+└── install.sh # Dependencias necesarias de linux
+
 ```
 
 ## Configuración
@@ -95,6 +97,10 @@ VIDEO_URL="URLDELA_CAMARA_DE_VIDEO"
 - **YOLOv5:** Instalado y configurado.
 - **FFmpeg:** Para procesamiento de videos.
 - **Dependencias de Python:** Instálalas ejecutando:
+- 
+ ```bash
+  ./install.sh
+  ```
 
   ```bash
   pip install -r requirements.txt
