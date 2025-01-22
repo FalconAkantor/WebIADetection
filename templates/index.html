@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Detect-IA Control</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1c1c1e;
+            color: #f5f5f7;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        h1 {
+            color: #e69600;
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #bf6600;
+            border: none;
+            padding: 15px 30px;
+            margin: 20px;
+            color: #f5f5f7;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(191, 0, 0, 0.3);
+        }
+        button:hover {
+            background-color: #a04000;
+            box-shadow: 0 6px 20px rgba(191, 0, 0, 0.5);
+        }
+        .log {
+            background-color: #2c2c2e;
+            padding: 20px;
+            margin: 20px auto;
+            width: 80%;
+            height: 300px;
+            overflow-y: scroll;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(44, 44, 46, 0.3);
+        }
+        input {
+            padding: 12px;
+            font-size: 1.2rem;
+            margin: 10px;
+            border-radius: 10px;
+            border: 2px solid #e66f00;
+            background-color: #2c2c2e;
+            color: #f5f5f7;
+        }
+        .input-group {
+            margin: 10px;
+        }
+        p {
+            font-size: 1.5rem;
+            margin-top: 10px;
+        }
+        pre {
+            color: #00e676;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1rem;
+            text-align: left;
+        }
+        .footer {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #2c2c2e;
+            color: #f5f5f7;
+            font-size: 0.9rem;
+            border-top: 2px solid #e66f00;
+            text-align: center;
+        }
+        .footer a {
+            color: #00e676;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 Detect-IA Control by Akantor</h1>
+
+    <!-- Calculadora de tiempo -->
+    <div>
+        <div class="input-group">
+            <input type="number" id="days" placeholder="Días 🌞" />
+            <input type="number" id="hours" placeholder="Horas ⏰" />
+            <input type="number" id="minutes" placeholder="Minutos ⏱️" />
+        </div>
+        <button onclick="calculateMinutes()">Calcular Minutos Totales 🔢</button>
+        <p id="total-minutes">Total en minutos: 0</p>
+    </div>
+
+    <!-- Control de grabación -->
+    <div>
+        <input type="number" id="duration" placeholder="Duración (minutos) 📹" />
+        
+        <!-- Botones para iniciar los scripts específicos -->
+        <button onclick="startScript('analisis')">🎬 Iniciar Grabación Personas 📼</button>
+        <button onclick="startScript('perro')">🐕 Iniciar Grabación Perros 🐾</button>
+        <button onclick="startScript('gato')">🐈 Iniciar Grabación Gatos 🐾</button><br>
+        
+        <button onclick="stopScript('analisis')">🛑 Detener Grabación Personas 🚫</button>
+        <button onclick="stopScript('perro')">🛑 Detener Grabación Perros 🚫</button>
+        <button onclick="stopScript('gato')">🛑 Detener Grabación Gatos 🚫</button>
+    </div>
+
+    <!-- Botones para obtener logs -->
+    <div>
+        <button onclick="fetchLogs('analisis')">📄 Ver Log Personas</button>
+        <button onclick="fetchLogs('perro')">📄 Ver Log Perros</button>
+        <button onclick="fetchLogs('gato')">📄 Ver Log Gatos</button>
+    </div>
+
+    <!-- Salida de logs -->
+    <div class="log" id="log">
+        <h3>💻 Salida del Script ⚙️</h3>
+        <pre id="script-log">Esperando...</pre>
+    </div>
+
+    <script>
+        function calculateMinutes() {
+            const days = parseInt(document.getElementById('days').value) || 0;
+            const hours = parseInt(document.getElementById('hours').value) || 0;
+            const minutes = parseInt(document.getElementById('minutes').value) || 0;
+
+            const totalMinutes = (days * 24 * 60) + (hours * 60) + minutes;
+            document.getElementById('total-minutes').innerHTML = `Total en minutos: ${totalMinutes} ⏳`;
+
+            // Actualizar el valor de duración en minutos
+            document.getElementById('duration').value = totalMinutes;
+        }
+
+        function startScript(script) {
+            const durationInput = document.getElementById('duration');
+            const duration = parseInt(durationInput.value);
+
+            // Validación: asegurar que se haya ingresado una duración válida
+            if (isNaN(duration) || duration <= 0) {
+                alert('Por favor, introduce una duración válida mayor a 0.');
+                return;
+            }
+
+            fetch(`/start`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ duration: duration, script: script })
+            })
+            .then(response => response.text())
+            .then(data => document.getElementById('script-log').innerHTML = data)
+            .catch(error => console.error('Error al iniciar:', error));
+        }
+
+        function stopScript(script) {
+            fetch('/stop', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ script: script })
+            })
+            .then(response => response.text())
+            .then(data => document.getElementById('script-log').innerHTML = data)
+            .catch(error => console.error('Error al detener:', error));
+        }
+
+        function fetchLogs(script) {
+            fetch(`/logs/${script}`)
+            .then(response => response.text())
+            .then(data => document.getElementById('script-log').innerHTML = data)
+            .catch(error => console.error('Error al obtener logs:', error));
+        }
+    </script>
+</body>
+<div class="footer">
+    <p>💡 Proyecto desarrollado por <strong>Nacho B</strong>. Encuentra el código en <a href="https://github.com/FalconAkantor" target="_blank">GitHub</a>.</p>
+    <p>&copy; 2025 Detect-IA. Todos los derechos reservados.</p>
+</div>
+</html>
